@@ -1,8 +1,6 @@
 # 🛡️ PrepArquitectura IT — Entrenador de entrevistas
 
-Aplicación web **autocontenible** para prepararte a entrevistas de **Ingeniero de Arquitecturas IT**, enfocada en ciberseguridad, datacenter y nube híbrida. Sin backend, sin dependencias externas y sin instalación: se ejecuta directamente en el navegador y se publica en GitHub Pages.
-
-> Acceso restringido con **usuario y contraseña** (puerta de entrada en el cliente). No es un control de seguridad de nivel servidor: ver la sección [Acceso](#acceso-usuario-y-contraseña).
+Aplicación web **autocontenible** para prepararte a entrevistas de **Ingeniero de Arquitecturas IT**, enfocada en ciberseguridad, datacenter y nube híbrida. Sin backend, sin dependencias externas y sin instalación: se ejecuta directamente en el navegador. El repositorio es **privado** y la página pide **usuario y contraseña** para entrar (ver [Acceso](#acceso-usuario-y-contraseña)).
 
 ## ✨ Funcionalidades
 
@@ -21,8 +19,9 @@ Aplicación web **autocontenible** para prepararte a entrevistas de **Ingeniero 
 Open_Group_APP/
 ├── index.html      # Interfaz (login, inicio, examen, resultados, historial)
 ├── styles.css      # Estilos, paleta clara y luminosa
-├── app.js          # Lógica: sesión, puntaje, progreso, localStorage
+├── app.js          # Lógica: login, sesión, puntaje, progreso, localStorage
 ├── questions.js    # Banco de preguntas y definición de módulos
+├── .gitignore      # Exclusiones del repositorio
 └── README.md       # Este archivo
 ```
 
@@ -31,23 +30,36 @@ Open_Group_APP/
 1. Descarga o clona esta carpeta.
 2. Haz doble clic en `index.html`. Se abre en tu navegador y la aplicación funciona completa.
    - Todo se guarda en el almacenamiento local de ese navegador.
+   - Pide usuario y contraseña al iniciar.
 
-## 🚀 Publicar en GitHub Pages
+## 🚀 Publicar la aplicación web
 
-1. Crea un repositorio en tu cuenta (por ejemplo `Open_Group_APP`) y sube los 5 archivos a la rama `main`.
-2. En el repositorio: **Settings → Pages → Build and deployment**.
-3. En *Source* elige **Deploy from a branch**, rama `main`, carpeta `/ (root)` → **Save**.
-4. En unos segundos estará en `https://TU-USUARIO.github.io/Open_Group_APP/`.
+El repositorio es **privado** (`MrCastilloF/Open_Group_APP`). Opciones, de más simple a más completa:
 
-### Publicar desde la línea de comandos
+### Opción A · Local (sin servidor, gratis)
+
+Doble clic en `index.html`. Funciona completa y pide usuario y contraseña al abrir.
+
+### Opción B · GitHub Pages (requiere GitHub **Pro**)
+
+GitHub Free solo permite Pages desde repositorios **públicos**; con GitHub Pro sí se publica desde un repositorio **privado**:
+
+1. En el repo: **Settings → Pages → Deploy from a branch**.
+2. Rama `main`, carpeta `/ (root)` → **Save**.
+3. La URL queda en `https://TU-USUARIO.github.io/Open_Group_APP/`. El código fuente sigue privado; quien abra la URL se encuentra la pantalla de usuario y contraseña.
+
+### Opción C · Hosting gratis que acepta repos privados
+
+[Netlify](https://www.netlify.com/), [Vercel](https://vercel.com/) o [Cloudflare Pages](https://pages.cloudflare.com/) se conectan a tu repositorio **privado** de GitHub y publican el sitio sin costo. La URL es pública, pero la aplicación exige usuario y contraseña.
+
+> ⚠️ La puerta de entrada es del lado del navegador. Para una protección real conviene añadir delante un proxy con autenticación (por ejemplo, Cloudflare Access con tu correo como único usuario permitido).
+
+### Subir cambios desde la línea de comandos
 
 ```bash
-git init
 git add .
-git commit -m "PrepArquitectura IT: app de entrevistas"
-git branch -M main
-git remote add origin https://github.com/TU-USUARIO/Open_Group_APP.git
-git push -u origin main
+git commit -m "PrepArquitectura IT: mejora"
+git push
 ```
 
 ## 🔐 Acceso (usuario y contraseña)
@@ -55,14 +67,25 @@ git push -u origin main
 La puerta de entrada está definida al inicio de `app.js`:
 
 ```js
-const AUTH = { user: 'candidato', pass: 'arquitectura2026' };
+const AUTH = {
+  user: 'candidato',
+  passHash: '51146c8e…'   // SHA-256 de la contraseña (no queda a la vista)
+};
 ```
 
-**Cambia `user` y `pass` antes de publicar.** Recomendaciones:
+**Usuario actual:** `candidato` · **Contraseña actual:** `arquitectura2026`
 
-- Es un control **del lado del cliente**: quien abra las herramientas del navegador podrá ver el código. No sirve para proteger datos sensibles.
-- Para mayor privacidad, publica el repositorio como **privado** o protege la URL con un servicio de acceso (por ejemplo, la protección de GitHub Pages con autenticación de GitHub o un proxy con contraseña).
-- La sesión vive en `sessionStorage`, así que se cierra al cerrar la pestaña.
+Para cambiarla:
+
+1. Abre la consola del navegador (F12) y ejecuta `hashPass('tu-nueva-contraseña')`.
+2. Copia el hash que imprime y pégalo en `AUTH.passHash` de `app.js`.
+3. Si además cambias el usuario, actualiza `AUTH.user`.
+
+Comportamiento del login:
+
+- Tras **5 intentos fallidos** la pantalla se bloquea 30 segundos.
+- La sesión vive en `sessionStorage`: se cierra al cerrar la pestaña.
+- El repositorio es privado: el código no es visible para el público.
 
 ## 🧠 Cómo estudiar
 
@@ -78,7 +101,7 @@ Edita `questions.js` y añade objetos al arreglo `QUESTIONS`:
 ```js
 {
   id: 'seg-12',              // id único y estable
-  module: 'seg',             // id de un módulo de MODULES
+  module: 'seg',             // id de un módulo en MODULES
   topic: 'Subtema',
   q: 'Enunciado de la pregunta',
   options: ['Opción A', 'Opción B', 'Opción C', 'Opción D'],

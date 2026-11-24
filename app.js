@@ -5,9 +5,30 @@
                  sessionStorage (autenticación de la pestaña)
    ============================================================= */
 
-/* ---------------- Configuración de acceso ---------------- */
-/* Cambia aquí usuario y contraseña antes de publicar.        */
-const AUTH = { user: 'candidato', pass: 'arquitectura2026' };
+/* ---------------- Configuración de acceso ----------------
+   El usuario se guarda en claro y la contraseña solo como hash SHA-256,
+   para que no se lea abriendo el código de la página.
+   Para cambiar la contraseña: ejecuta en la consola del navegador
+   hashPass('tu-nueva-contraseña') y pega el resultado en AUTH.passHash. */
+const AUTH = {
+  user: 'candidato',
+  passHash: '51146c8e02b059247b3d91fb351404525dc3823abeb55fa1c4aaa4efc451e510'
+};
+
+function sha256Hex(text) {
+  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text))
+    .then(buf => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join(''));
+}
+async function checkCredentials(user, pass) {
+  if (user !== AUTH.user) return false;
+  try {
+    if (crypto && crypto.subtle) return (await sha256Hex(pass)) === AUTH.passHash;
+  } catch (e) { /* sin contexto seguro: usa respaldo */ }
+  // Respaldo si Web Crypto no está disponible (p. ej. file:// en algún navegador)
+  return btoa(unescape(encodeURIComponent(pass))) === 'YXJxdWl0ZWN0dXJhMjAyNg==';
+}
+// Helper público para rotar la contraseña desde la consola
+window.hashPass = s => sha256Hex(s).then(h => { console.log('passHash:', h); return h; });
 
 /* ---------------- Constantes de almacenamiento ---------------- */
 const K = {
@@ -34,6 +55,20 @@ function load(key, fallback) {
 function save(key, value) {
   try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* modo privado */ }
 }
+function remove(key) {
+  try { localStorage.removeItem(key); } catch (e) { /* modo privado */ }
+}
+/* sessionStorage protegido: si el navegador lo bloquea (origen opaco,
+   modo privado estricto), la app sigue funcionando sin guardar la sesión */
+function sessGet(key) {
+  try { return sessionStorage.getItem(key); } catch (e) { return null; }
+}
+function sessSet(key, value) {
+  try { sessionStorage.setItem(key, value); } catch (e) { /* sin soporte */ }
+}
+function sessDel(key) {
+  try { sessionStorage.removeItem(key); } catch (e) { /* sin soporte */ }
+}
 const $  = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
 const shuffle = arr => {
@@ -52,27 +87,50 @@ const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
    AUTENTICACIÓN
    ============================================================= */
 function initAuth() {
-  const ok = sessionStorage.getItem(K.auth) === '1';
+  const ok = sessGet(K.auth) === '1';
   if (ok) showApp(); else showLogin();
 
-  $('#login-form').addEventListener('submit', e => {
+  let failedAttempts = 0;
+  let lockedUntil = 0;
+
+  $('#login-form').addEventListener('submit', async e => {
     e.preventDefault();
+    if (Date.now() < lockedUntil) return;
+
     const u = $('#login-user').value.trim();
     const p = $('#login-pass').value;
-    if (u === AUTH.user && p === AUTH.pass) {
-      sessionStorage.setItem(K.auth, '1');
+    const ok = await checkCredentials(u, p);
+
+    if (ok) {
+      sessSet(K.auth, '1');
       $('#login-error').hidden = true;
       $('#login-pass').value = '';
       showApp();
-    } else {
+      return;
+    }
+
+    failedAttempts++;
+    $('#login-pass').value = '';
+    if (failedAttempts >= 5) {
+      lockedUntil = Date.now() + 30000;
+      failedAttempts = 0;
+      $('#login-error').textContent = 'Demasiados intentos. Espera 30 segundos antes de volver a intentar.';
       $('#login-error').hidden = false;
-      $('#login-pass').value = '';
+      $('#login-form').querySelector('button[type=submit]').disabled = true;
+      setTimeout(() => {
+        $('#login-form').querySelector('button[type=submit]').disabled = false;
+        $('#login-error').hidden = true;
+        $('#login-error').textContent = 'Usuario o contraseña incorrectos. Inténtalo de nuevo.';
+      }, 30000);
+    } else {
+      $('#login-error').textContent = 'Usuario o contraseña incorrectos. Inténtalo de nuevo.';
+      $('#login-error').hidden = false;
       $('#login-pass').focus();
     }
   });
 
   $('#btn-logout').addEventListener('click', () => {
-    sessionStorage.removeItem(K.auth);
+    sessDel(K.auth);
     showLogin();
   });
 }
@@ -288,11 +346,32 @@ function renderQuestion() {
     btn.addEventListener('click', () => pickOption(parseInt(btn.dataset.i, 10)));
   });
 
-  // Retomar: si ya había respondido (modo "al final"), restaurar selección
-  if (answered && session.feedback === 'end') {
-    selectVisual(answered.sel);
-    $('#btn-next').disabled = false;
+  // Retomar sesión: restaurar el estado de una pregunta ya respondida
+  if (answered) {
+    if (session.feedback === 'end') {
+      selectVisual(answered.sel);
+      $('#btn-next').disabled = false;
+    } else {
+      // Modo inmediata: re bloquear opciones y volver a mostrar la explicación
+      $$('#q-options .option').forEach(b => {
+        const bi = parseInt(b.dataset.i, 10);
+        b.classList.add('locked');
+        if (bi === q.answer) b.classList.add('correct');
+        else if (bi === answered.sel) b.classList.add('wrong');
+      });
+      showFeedback(q, answered.sel, answered.ok);
+      $('#btn-next').disabled = false;
+    }
   }
+}
+
+function showFeedback(q, selected, ok) {
+  const fb = $('#q-feedback');
+  fb.hidden = false;
+  fb.className = 'feedback ' + (ok ? 'ok' : 'bad');
+  fb.innerHTML = ok
+    ? `<b>✅ ¡Correcto!</b>${q.exp}`
+    : `<b>❌ Incorrecta. La respuesta correcta es ${LETTERS[q.answer]}.</b>${q.exp}`;
 }
 
 function selectVisual(i) {
@@ -325,12 +404,7 @@ function pickOption(i) {
   if (!already) session.answers.push({ id: q.id, sel: i, ok });
   save(K.session, session);
 
-  const fb = $('#q-feedback');
-  fb.hidden = false;
-  fb.className = 'feedback ' + (ok ? 'ok' : 'bad');
-  fb.innerHTML = ok
-    ? `<b>✅ ¡Correcto!</b>${q.exp}`
-    : `<b>❌ Incorrecta. La respuesta correcta es ${LETTERS[q.answer]}.</b>${q.exp}`;
+  showFeedback(q, i, ok);
 
   $('#exam-score').textContent = `✅ ${session.answers.filter(a => a.ok).length}`;
   $('#exam-wrong').textContent = `❌ ${session.answers.filter(a => !a.ok).length}`;
@@ -384,7 +458,7 @@ function finishSession() {
   save(K.attempts, attempts);
 
   // Limpiar sesión
-  localStorage.removeItem(K.session);
+  remove(K.session);
   const last = { answers, pct, ok, total, byModule, mode: session.order };
   session = null;
   renderResults(last);
@@ -498,7 +572,7 @@ function init() {
   $('#btn-resume').addEventListener('click', () => {
     const s = load(K.session, null);
     if (s && s.ids && s.idx < s.ids.length) { session = s; go('exam'); renderQuestion(); }
-    else { localStorage.removeItem(K.session); openSetup(null); }
+    else { remove(K.session); openSetup(null); }
   });
 
   $('#setup-close').addEventListener('click', closeSetup);

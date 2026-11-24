@@ -764,7 +764,7 @@ const QUESTIONS = [
     id: 'pm-03', module: 'pm', topic: 'Stakeholders',
     q: 'La matriz RACI sirve para:',
     options: [
-      'Definir roles: quién Responde, quién es Aprobador/Acargo, quién Consulta y quién es Informado',
+      'Definir roles: quién ejecuta (Responsable), quién aprueba (Accountable), quién consulta y quién es informado',
       'Medir el rendimiento de la red',
       'Calcular el costo de los servidores',
       'Priorizar vulnerabilidades'
