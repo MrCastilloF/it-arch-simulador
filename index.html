@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>PrepArquitectura IT · Entrevista de Ingeniero de Arquitecturas IT</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+<!-- ============================ LOGIN ============================ -->
+<section id="view-login" class="view login-view">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="login-card">
+    <div class="login-brand">
+      <span class="logo-tile">🏗️</span>
+      <div>
+        <strong>PrepArquitectura IT</strong>
+        <small>Entrevista · Ingeniero de Arquitecturas IT</small>
+      </div>
+    </div>
+    <h1>Entra para empezar a practicar</h1>
+    <p class="muted">Acceso restringido. Ingresa tu usuario y contraseña.</p>
+    <form id="login-form" autocomplete="off">
+      <label for="login-user">Usuario</label>
+      <input type="text" id="login-user" placeholder="Tu usuario" required>
+      <label for="login-pass">Contraseña</label>
+      <input type="password" id="login-pass" placeholder="Tu contraseña" required>
+      <p id="login-error" class="login-error" hidden>Usuario o contraseña incorrectos. Inténtalo de nuevo.</p>
+      <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+    </form>
+    <p class="login-note">Progreso guardado solo en este navegador (localStorage).</p>
+  </div>
+</section>
+
+<!-- ============================ APP ============================ -->
+<div id="app" hidden>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#" id="brand-home">
+        <span class="logo-tile small">🏗️</span>
+        <span class="brand-text">Prep<b>Arquitectura</b> IT</span>
+      </a>
+      <nav class="topnav">
+        <button class="nav-link active" data-go="home">Inicio</button>
+        <button class="nav-link" data-go="history">Historial</button>
+        <button class="nav-link" data-go="howto">Cómo estudiar</button>
+        <button class="nav-link nav-ghost" id="btn-logout">Salir</button>
+      </nav>
+    </div>
+    <div class="topbar-progress">
+      <div class="topbar-progress-inner">
+        <span id="global-progress-label">0% dominado</span>
+        <div class="bar"><i id="global-progress-bar" style="width:0%"></i></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ==================== HOME ==================== -->
+    <section id="view-home" class="view">
+      <div class="hero">
+        <div class="hero-text">
+          <span class="pill">Preparación para entrevista técnica</span>
+          <h1>Domina ciberseguridad,<br>datacenter y nube híbrida</h1>
+          <p>Practica con un banco de preguntas de opción múltiple, recibe explicaciones claras de cada respuesta y compara tus intentos para ver tu evolución.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" id="btn-new-exam">🚀 Iniciar examen</button>
+            <button class="btn btn-outline btn-lg" id="btn-resume" hidden>▶ Continuar donde quedé</button>
+          </div>
+          <div class="hero-stats" id="hero-stats"></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-card art-1">🛡️ <b>Ciberseguridad</b></div>
+          <div class="art-card art-2">🏢 <b>Datacenter</b></div>
+          <div class="art-card art-3">☁️ <b>Nube híbrida</b></div>
+          <div class="art-card art-4">📋 <b>PMI &amp; Propuestas</b></div>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>Catálogo de módulos</h2>
+        <p class="muted">Elige un módulo para practicar o inicia un examen combinado.</p>
+      </div>
+      <div class="cards-grid" id="module-grid"></div>
+    </section>
+
+    <!-- ==================== EXAMEN ==================== -->
+    <section id="view-exam" class="view" hidden>
+      <div class="exam-top">
+        <div class="exam-progress-wrap">
+          <div class="bar big"><i id="exam-progress-bar" style="width:0%"></i></div>
+          <span id="exam-progress-label">Pregunta 1 de 10</span>
+        </div>
+        <div class="exam-meta">
+          <span class="chip" id="exam-score">✅ 0</span>
+          <span class="chip chip-warn" id="exam-wrong">❌ 0</span>
+          <button class="btn btn-ghost" id="btn-quit">Salir</button>
+        </div>
+      </div>
+
+      <div class="question-card" id="question-card">
+        <div class="q-tags">
+          <span class="tag" id="q-module-tag">Módulo</span>
+          <span class="tag tag-soft" id="q-topic-tag">Tema</span>
+        </div>
+        <h2 id="q-text">Cargando pregunta…</h2>
+        <div class="options" id="q-options"></div>
+        <div class="feedback" id="q-feedback" hidden></div>
+        <div class="q-actions">
+          <button class="btn btn-primary btn-lg" id="btn-next" disabled>Siguiente →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== RESULTADOS ==================== -->
+    <section id="view-results" class="view" hidden>
+      <div class="result-hero">
+        <div class="ring" id="score-ring">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="52"></circle>
+            <circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52"></circle>
+          </svg>
+          <div class="ring-num"><b id="score-pct">0%</b><span id="score-frac">0/0</span></div>
+        </div>
+        <div class="result-info">
+          <h1 id="result-title">¡Examen finalizado!</h1>
+          <p class="muted" id="result-sub">Aquí tienes el desglose de tu desempeño.</p>
+          <div class="result-actions">
+            <button class="btn btn-primary btn-lg" id="btn-restart">🔄 Reiniciar examen</button>
+            <button class="btn btn-outline btn-lg" id="btn-result-home">Volver al inicio</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head"><h2>Desglose por módulo</h2></div>
+      <div class="breakdown" id="breakdown"></div>
+
+      <div class="section-head">
+        <h2>Revisión de respuestas</h2>
+        <p class="muted">Explicación de cada pregunta, correcta e incorrecta.</p>
+      </div>
+      <div id="review-list"></div>
+    </section>
+
+    <!-- ==================== HISTORIAL ==================== -->
+    <section id="view-history" class="view" hidden>
+      <div class="section-head">
+        <h2>Historial de intentos</h2>
+        <p class="muted">Tus últimos resultados guardados en este navegador.</p>
+      </div>
+      <div id="history-list"></div>
+      <div class="empty" id="history-empty" hidden>
+        <div class="empty-icon">📊</div>
+        <h3>Todavía no hay intentos</h3>
+        <p class="muted">Inicia tu primer examen y aquí verás tu evolución.</p>
+        <button class="btn btn-primary" onclick="document.getElementById('btn-new-exam').click()">Iniciar examen</button>
+      </div>
+    </section>
+
+    <!-- ==================== CÓMO ESTUDIAR ==================== -->
+    <section id="view-howto" class="view" hidden>
+      <div class="section-head">
+        <h2>Cómo estudiar con PrepArquitectura IT</h2>
+        <p class="muted">Cuatro pasos y listo. Sin instalación.</p>
+      </div>
+      <div class="howto-grid">
+        <div class="howto-card"><span class="howto-num">1</span><h3>Elige tu sesión</h3><p>Define cuántas preguntas quieres, si deseas orden aleatorio o priorizar las que fallaste, y si quieres retroalimentación inmediata o al final.</p></div>
+        <div class="howto-card"><span class="howto-num">2</span><h3>Responde con calma</h3><p>Selecciona una opción. Con retroalimentación inmediata verás al instante si acertaste y por qué.</p></div>
+        <div class="howto-card"><span class="howto-num">3</span><h3>Revisa tu resultado</h3><p>Al terminar verás porcentaje, desglose por módulo y la explicación de cada pregunta.</p></div>
+        <div class="howto-card"><span class="howto-num">4</span><h3>Repite y compara</h3><p>Tu progreso y tus intentos quedan guardados en el navegador: puedes retomar y comparar resultados entre sesiones.</p></div>
+      </div>
+      <div class="tip-box">
+        <h3>💡 Consejo de estudio</h3>
+        <p>Activa <b>priorizar las que fallé</b>: ese modo repite primero las preguntas con errores previos hasta que las domines. Alterna módulos cortos con exámenes combinados para medir tu progreso real.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>PrepArquitectura IT · Entrenamiento y evaluación para entrevistas de Ingeniero de Arquitecturas IT · Progreso guardado en tu navegador.</p>
+  </footer>
+</div>
+
+<!-- ==================== MODAL DE CONFIGURACIÓN ==================== -->
+<div class="modal-backdrop" id="setup-modal" hidden>
+  <div class="modal">
+    <button class="modal-close" id="setup-close" aria-label="Cerrar">✕</button>
+    <h2>Configura tu examen</h2>
+    <p class="muted">Tres decisiones y a practicar.</p>
+
+    <div class="setup-block">
+      <label>1 · ¿Cuántas preguntas quieres evaluar?</label>
+      <div class="segmented" id="setup-count"></div>
+    </div>
+
+    <div class="setup-block">
+      <label>2 · ¿Cómo ordenamos las preguntas?</label>
+      <div class="radio-list">
+        <label class="radio-card">
+          <input type="radio" name="order" value="random" checked>
+          <span><b>Orden aleatorio</b><small>Mezcla todas las preguntas del examen.</small></span>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="order" value="failed">
+          <span><b>Priorizar las que fallé</b><small>Primero las que fallaste en intentos anteriores, luego el resto.</small></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="setup-block">
+      <label>3 · ¿Cuándo quieres ver la explicación?</label>
+      <div class="radio-list">
+        <label class="radio-card">
+          <input type="radio" name="feedback" value="immediate" checked>
+          <span><b>Retroalimentación inmediata</b><small>Respuesta y explicación justo al responder.</small></span>
+        </label>
+        <label class="radio-card">
+          <input type="radio" name="feedback" value="end">
+          <span><b>Al final del examen</b><small>Respondes todo primero y revisas al terminar.</small></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="setup-block">
+      <label>Módulos incluidos</label>
+      <div class="module-toggles" id="setup-modules"></div>
+      <div class="module-quick">
+        <button class="btn btn-ghost btn-sm" id="sel-all">Todos</button>
+        <button class="btn btn-ghost btn-sm" id="sel-none">Ninguno</button>
+        <span class="muted" id="setup-total"></span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary btn-lg btn-block" id="btn-start">Comenzar examen →</button>
+  </div>
+</div>
+
+<script src="questions.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
