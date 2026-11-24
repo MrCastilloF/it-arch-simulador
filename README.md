@@ -36,7 +36,25 @@ Open_Group_APP/
 
 ## 🚀 Publicar la aplicación web
 
-El repositorio es **privado** (`MrCastilloF/Open_Group_APP`). Opciones, de más simple a más completa:
+### 🌐 Publicación activa (ya funcionando)
+
+| | |
+|---|---|
+| **Página en vivo** | https://mrcastillof.github.io/it-arch-simulador/ |
+| **Usuario / contraseña** | `candidato` / `arquitectura2026` |
+| **Repo público (despliegue)** | https://github.com/MrCastilloF/it-arch-simulador (rama `gh-pages`) |
+| **Repo privado (fuente)** | https://github.com/MrCastilloF/Open_Group_APP (rama `main`) |
+
+**Actualizaciones:** el sitio se sirve desde la rama `gh-pages`. Tras cada cambio:
+
+```bash
+git push origin main                 # repo privado (fuente)
+git push pages main:gh-pages         # publica en la web
+```
+
+El repo `pages` apunta a `MrCastilloF/it-arch-simulador`. Pages tarda ~30-60 s en reconstruir.
+
+### Otras opciones
 
 ### Opción A · Local (sin servidor, gratis)
 
