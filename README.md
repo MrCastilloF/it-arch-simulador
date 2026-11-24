@@ -21,6 +21,7 @@ Open_Group_APP/
 ├── styles.css      # Estilos, paleta clara y luminosa
 ├── app.js          # Lógica: login, sesión, puntaje, progreso, localStorage
 ├── questions.js    # Banco de preguntas y definición de módulos
+├── serve.js        # Servidor local opcional (node serve.js → http://127.0.0.1:8090)
 ├── .gitignore      # Exclusiones del repositorio
 └── README.md       # Este archivo
 ```
@@ -28,9 +29,10 @@ Open_Group_APP/
 ## ▶ Ejecutar en el navegador (sin instalación)
 
 1. Descarga o clona esta carpeta.
-2. Haz doble clic en `index.html`. Se abre en tu navegador y la aplicación funciona completa.
+2. **Opción 1:** haz doble clic en `index.html`. Se abre en tu navegador y la aplicación funciona completa.
+3. **Opción 2 (con URL):** si tienes Node.js, ejecuta `node serve.js` y abre **http://127.0.0.1:8090**.
    - Todo se guarda en el almacenamiento local de ese navegador.
-   - Pide usuario y contraseña al iniciar.
+   - En ambos casos pide usuario y contraseña al iniciar.
 
 ## 🚀 Publicar la aplicación web
 
