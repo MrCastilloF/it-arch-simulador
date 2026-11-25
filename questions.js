@@ -10872,5 +10872,439 @@ const QUESTIONS = [
     ],
     "answer": 1,
     "exp": "La música en espera (o tonos) confirma al llamante que sigue en línea; debe configurarse en el servidor o terminal para que la llamada en espera no suene a línea muerta."
+  },
+  {
+    "id": "dc-301",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Qué tecnología de interfaz de disco recomendaría para la ejecución de una base de datos con alta carga transaccional?",
+    "options": [
+      "PCIe (unidades NVMe)",
+      "SATA",
+      "IDE",
+      "Cinta LTO para archivo"
+    ],
+    "answer": 0,
+    "exp": "NVMe sobre PCIe ofrece la menor latencia y el mayor número de IOPS, lo que responde mejor al patrón de muchos accesos cortos de una BD transaccional; SATA e IDE quedan muy por debajo en rendimiento."
+  },
+  {
+    "id": "dc-302",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Con respecto a la velocidad de rotación, ¿qué disco duro recomendaría para almacenar las imágenes diagnósticas de un sistema de imagenología de una clínica?",
+    "options": [
+      "Discos de 10K",
+      "Discos de 15K",
+      "Discos de 7,2K",
+      "Discos de 5400 RPM de escritorio"
+    ],
+    "answer": 0,
+    "exp": "10K ofrece el mejor equilibrio entre capacidad y velocidad de lectura para un acervo de imágenes que se consulta con frecuencia; 7,2K se reserva para archivo frío por capacidad, 15K aporta menor latencia pero mucha menos capacidad y no justifica el costo en este uso."
+  },
+  {
+    "id": "dc-303",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Un switch Ethernet tiene ocho puertos operativos de lunes a viernes 24 horas. El puerto 4 falla así: lunes 8 PM–9 PM, miércoles 7 PM–9 PM, jueves 6 AM–9 AM y sábado 4 PM–7 PM. ¿Cuál es el MTTR del puerto 4?",
+    "options": [
+      "2,25 horas (2 h 15 min)",
+      "9 horas",
+      "4 horas",
+      "1,5 horas"
+    ],
+    "answer": 0,
+    "exp": "El MTTR es el tiempo medio de reparación: tiempo total de caída (1+2+3+3 = 9 horas) dividido entre el número de eventos (4) = 2,25 horas."
+  },
+  {
+    "id": "dc-304",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Cuál es la diferencia entre un módulo de fibra óptica SMF (single-mode) y MMF (multi-mode)?",
+    "options": [
+      "SMF tiene un núcleo fino que permite un solo modo de propagación y distancias de kilómetros con láser; MMF admite varios modos y sirve para distancias cortas (cientos de metros)",
+      "SMF transporta solo voz y MMF transporta solo datos",
+      "SMF es un cable de cobre recubierto y MMF es fibra sin revestimiento",
+      "Ambos son idénticos y solo cambia el conector"
+    ],
+    "answer": 0,
+    "exp": "El núcleo fino de la fibra monomodo (típicamente 9 µm) reduce la dispersión y permite enlaces largos con fuentes láser; la multimodo (50/62,5 µm) usa LED/VCSEL y es más económica para distancias cortas dentro del datacenter."
+  },
+  {
+    "id": "dc-305",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Un cliente necesita un servidor para su oficina remota de cinco colaboradores que apoyará autenticación de Active Directory y un file server, con licencia de Windows Server Standard de 16 cores. ¿Qué procesador le recomendaría y cuántos cores debe tener para un licenciamiento correcto?",
+    "options": [
+      "Un procesador de 16 cores (por ejemplo, Intel Gold de 16 cores), para cubrir el mínimo de licenciamiento y dejar margen de crecimiento",
+      "Un procesador de 6 cores (Intel Bronze), porque con cinco usuarios basta y no importa la licencia",
+      "Un procesador de 4 cores de gama de entrada",
+      "Cualquier procesador, ya que la licencia de Windows Server no depende de los cores"
+    ],
+    "answer": 0,
+    "exp": "Windows Server se licencia por núcleo con un mínimo de 16 cores por servidor (2 packs de 8), así que el equipo debe contar al menos con 16 cores licenciados; además, con cinco usuarios el cuello de botella no es el CPU y se reserva margen de crecimiento."
+  },
+  {
+    "id": "dc-306",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Cuál es un beneficio de usar una arquitectura de red con agregación de enlaces?",
+    "options": [
+      "Aumenta el ancho de banda disponible y aporta redundancia si falla uno de los enlaces",
+      "Elimina la necesidad de switch de núcleo",
+      "Reduce la latencia a cero milisegundos",
+      "Reemplaza las VLANs y la segmentación"
+    ],
+    "answer": 0,
+    "exp": "La agregación (por ejemplo, LACP) combina varios enlaces en uno lógico: suma capacidad de transferencia y mantiene el tráfico si un enlace físico se cae."
+  },
+  {
+    "id": "dc-307",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Un PC con dirección 192.168.10.24/24 sin gateway configurado debe conectarse al servidor de archivos 192.168.10.100/24 y al servidor de Active Directory 192.168.20.200/24. ¿A cuál podrá acceder?",
+    "options": [
+      "Solo al servidor de archivos 192.168.10.100, porque está en su misma subred y no tiene ruta hacia otra red sin puerta de enlace",
+      "A los dos servidores, porque la subred no influye",
+      "Solo al servidor de Active Directory 192.168.20.200",
+      "A ninguno, porque sin gateway no hay comunicación de red"
+    ],
+    "answer": 0,
+    "exp": "Sin gateway el equipo solo puede alcanzar destinos de su propia subred (192.168.10.0/24); para llegar a 192.168.20.0/24 necesita un router puerta de enlace que enrute el tráfico."
+  },
+  {
+    "id": "dc-308",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "El mismo equipo 192.168.10.24/24, ahora con gateway configurado, intenta acceder a 192.168.10.100/24 y a 192.168.20.200/24. ¿A cuál podrá acceder?",
+    "options": [
+      "A ambos: el servidor local por ruta directa y el de Active Directory enrutado a través del gateway",
+      "Solo al servidor local, porque el gateway solo sirve para Internet",
+      "Solo al servidor de Active Directory",
+      "A ninguno, porque el gateway bloquea el tráfico interno"
+    ],
+    "answer": 0,
+    "exp": "Con puerta de enlace el equipo envía a su subnet mask los destinos ajenos a su subred; el router los enruta y la respuesta vuelve por la misma puerta de enlace, permitiendo alcanzar ambos servidores."
+  },
+  {
+    "id": "dc-309",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Los usuarios se conectan a la red WiFi corporativa pero no reciben dirección IP. ¿Cuál puede ser la causa?",
+    "options": [
+      "Falla o indisponibilidad del servicio DHCP (alcance agotado, servidor DHCP caído o sin relay/VLAN correcta hacia él)",
+      "Contraseña WiFi incorrecta, porque sin contraseña no se asigna IP",
+      "Señal demasiado fuerte, porque satura el punto de acceso",
+      "MTU de la interfaz demasiado bajo para la velocidad WiFi"
+    ],
+    "answer": 0,
+    "exp": "La asociación al punto de acceso indica que el nivel 2 funciona; la falta de IP apunta al DHCP: alcance sin direcciones, servidor fuera de servicio o el cliente en una VLAN sin servidor/relay DHCP."
+  },
+  {
+    "id": "dc-310",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Cuál es la diferencia entre un sistema de cómputo convergente y uno hiperconvergente?",
+    "options": [
+      "El convergente integra compute, storage y red en el rack pero con capas y equipos especializados; el hiperconvergente unifica compute, storage y red en software sobre hardware x86 común",
+      "El convergente es solo para nube pública y el hiperconvergente solo para on-premise",
+      "El hiperconvergente no usa software definido",
+      "No hay diferencia, son dos nombres del mismo producto"
+    ],
+    "answer": 0,
+    "exp": "La convergencia integra componentes especializados (switches, controladores de storage) gestionados de forma unificada; la hiperconvergencia elimina el hardware dedicado de storage/red ejecutándolo como software sobre nodos x86."
+  },
+  {
+    "id": "dc-311",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Qué consideraciones se deben tener en el licenciamiento de Microsoft en un sistema de cómputo hiperconvergente?",
+    "options": [
+      "Licenciar todos los núcleos físicos de todos los hosts donde se ejecutan las máquinas virtuales, evaluando Standard (con límite de instancias) frente a Datacenter según la densidad de virtualización",
+      "Licenciar solo los núcleos que estén encendidos en cada momento",
+      "Licenciar únicamente el host con más VMs",
+      "La licencia depende del número de usuarios y no de los cores"
+    ],
+    "answer": 0,
+    "exp": "En un clúster hiperconvergente las VMs se mueven entre hosts, por lo que se licencian los cores de todos los hosts que puedan ejecutarlas; a mayor densidad de VMs conviene Datacenter, que permite instancias ilimitadas en el host licenciado."
+  },
+  {
+    "id": "dc-312",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Qué función tiene una tarjeta HBA en un servidor?",
+    "options": [
+      "Conecta el servidor a la SAN de Fibre Channel (o a iSCSI) presentando los volúmenes de almacenamiento como discos locales",
+      "Adapta la señal de video para monitores",
+      "Agrega puertos de red para las VLANs",
+      "Gestiona la alimentación eléctrica del servidor"
+    ],
+    "answer": 0,
+    "exp": "El Host Bus Adapter implementa el protocolo de la red de almacenamiento, genera los frames FC o las sesiones iSCSI y hace que el sistema operativo vea los LUN como discos locales."
+  },
+  {
+    "id": "dc-313",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Cuántas máquinas virtuales de Windows Server se pueden virtualizar con una licencia de Windows Server Datacenter en un servidor físico con 16 cores y dos procesadores?",
+    "options": [
+      "Un número ilimitado de instancias, siempre que estén licenciados todos los núcleos físicos del host",
+      "Solo dos máquinas virtuales",
+      "Una por core, es decir 16",
+      "Una sola máquina virtual por licencia"
+    ],
+    "answer": 0,
+    "exp": "La edición Datacenter permite instancias ilimitadas (OSE) en el servidor licenciado; el requisito es cubrir la licencia por núcleo de todos los cores físicos del host."
+  },
+  {
+    "id": "dc-314",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Un cliente necesita conectar un servidor nuevo a la SAN por fibra canal. ¿Qué velocidad recomendaría entre las siguientes?",
+    "options": [
+      "16 Gbps",
+      "8 Gbps",
+      "4 Gbps",
+      "1 Gbps"
+    ],
+    "answer": 0,
+    "exp": "16 Gb es el estándar ampliamente adoptado, compatible con la mayoría de fabrics e HBA existentes y con buen relación costo/rendimiento para un servidor nuevo; 8/4/1 Gb son generaciones anteriores."
+  },
+  {
+    "id": "dc-315",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Un cliente usa iSCSI para su SAN a 1 Gbps. ¿Qué velocidad de conexión le sugeriría para el nuevo servidor sin cambiar de protocolo?",
+    "options": [
+      "10 Gb (10GbE)",
+      "32 GB",
+      "8 GB",
+      "100 Mbps"
+    ],
+    "answer": 0,
+    "exp": "Manteniendo iSCSI, el salto natural es 10GbE: reduce la latencia y multiplica el ancho de banda disponible para las sesiones de almacenamiento; GB es una unidad de memoria, no de enlace."
+  },
+  {
+    "id": "dc-316",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Para qué sirve el protocolo Spanning Tree en la configuración de un switch?",
+    "options": [
+      "Evita los bucles en la red de capa 2 bloqueando caminos redundantes hasta que sean necesarios",
+      "Asigna direcciones IP a los equipos",
+      "Cifra el tráfico entre switches",
+      "Balancea la carga entre servidores"
+    ],
+    "answer": 0,
+    "exp": "STP detecta topologías con caminos duplicados y bloquea los enlaces redundantes, evitando bucles, tormentas de broadcast y direcciones MAC inestables, y permitiendo reconexión automática si el camino activo falla."
+  },
+  {
+    "id": "dc-317",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "Mencione al menos dos características necesarias para establecer alta disponibilidad en un clúster de servidores virtualizados de VMware.",
+    "options": [
+      "Red de heartbeat redundante (múltiples redes de management) y almacenamiento compartido accesible por todos los hosts",
+      "Una sola tarjeta de red y discos locales de cada host",
+      "Impresora compartida y licencia de antivirus",
+      "Misma marca de monitor y mismo sistema operativo del escritorio"
+    ],
+    "answer": 0,
+    "exp": "La HA necesita detectar fallos sin falsos positivos (redes de heartbeat redundantes) y poder reubicar las VMs (almacenamiento compartido accesible por todos los nodos); a esto se suman recursos suficientes y compatibilidad entre hosts."
+  },
+  {
+    "id": "dc-318",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Cuáles son los principales beneficios de la virtualización de servidores desde el punto de vista de la empresa?",
+    "options": [
+      "Consolidación de hardware, mejor utilización de recursos, menor tiempo de aprovisionamiento y ahorro en energía y operación",
+      "Eliminación de toda necesidad de respaldo",
+      "Eliminación de la necesidad de administradores de sistemas",
+      "Garantía de cero caídas del servicio"
+    ],
+    "answer": 0,
+    "exp": "La virtualización aumenta la utilización de los servidores, agiliza el despliegue, reduce costos de hardware, energía y espacio, y facilita la disponibilidad; los respaldos y la operación siguen siendo necesarios."
+  },
+  {
+    "id": "dc-319",
+    "module": "dc",
+    "topic": "Prueba técnica",
+    "q": "¿Cuáles son las principales diferencias entre una red inalámbrica de 2,4 GHz y una de 5 GHz?",
+    "options": [
+      "2,4 GHz tiene mayor alcance y penetración pero menos canales no solapados y más interferencia; 5 GHz ofrece más canales y mayor ancho de banda con menor alcance",
+      "5 GHz tiene siempre más alcance que 2,4 GHz",
+      "2,4 GHz admite más ancho de banda y5 GHz es más lenta",
+      "No existen diferencias prácticas"
+    ],
+    "answer": 0,
+    "exp": "La banda de 2,4 GHz viaja más lejos y atraviesa paredes, pero solo tiene tres canales no solapados y mucha interferencia; 5 GHz brinda canales adicionales y mayores tasas de transferencia a costa de menor cobertura."
+  },
+  {
+    "id": "seg-301",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "¿Cuál es la diferencia entre seguridad informática y seguridad de la información?",
+    "options": [
+      "La seguridad informática protege sistemas, hardware y software; la seguridad de la información protege los datos en cualquier soporte, garantizando confidencialidad, integridad y disponibilidad",
+      "Son lo mismo y no existe diferencia",
+      "La seguridad informática solo se refiere al uso de antivirus",
+      "La seguridad de la información aplica únicamente a archivos impresos"
+    ],
+    "answer": 0,
+    "exp": "La seguridad informática se centra en la infraestructura de cómputo; la seguridad de la información protege el dato en sí mismo, sin importar dónde esté (servidor, nube, papel), bajo el modelo CIA."
+  },
+  {
+    "id": "seg-302",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "Un comercio electrónico maneja números de tarjeta de crédito en una base de datos consultada por sus aplicaciones backend y debe demostrar cumplimiento normativo. ¿Qué estrategia de seguridad plantearía?",
+    "options": [
+      "Un programa integral: cifrado o tokenización de los datos de tarjeta, segmentación de la red, firewall/WAF, mínimo privilegio, registro y monitoreo, gestión de vulnerabilidades y evidencia de cumplimiento (p. ej. PCI DSS)",
+      "Instalar solo un antivirus en el servidor de base de datos",
+      "Ocultar la base de datos sin autenticación",
+      "Cifrar únicamente el sitio web, dejando la base de datos en claro"
+    ],
+    "answer": 0,
+    "exp": "La protección de datos de tarjetas exige capas combinadas (protección del dato, segmentación, control de acceso, monitoreo y auditoría) alineadas al marco de cumplimiento de la industria de tarjetas."
+  },
+  {
+    "id": "seg-303",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "Además de cumplir la normativa, ¿qué amenazas adicionales se podrían prevenir con la solución planteada para el comercio electrónico?",
+    "options": [
+      "Exfiltración de datos, fraude con tarjetas, ataque a la aplicación web (inyección, manipulación de transacciones) y acceso indebido de usuarios internos",
+      "Fallas de energía y desastres naturales",
+      "Caídas del proveedor de internet",
+      "Errores de facturación contable"
+    ],
+    "answer": 0,
+    "exp": "El mismo programa que cumple la normativa reduce el robo de datos, el fraude, los ataques a la capa web y el abuso de privilegios internos, ya que limita el acceso, cifra la información y deja evidencia auditable."
+  },
+  {
+    "id": "seg-304",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "Un cliente es objetivo de ataques de denegación de servicio y de manipulación no autorizada de sus portales web ciudadanos. ¿Qué solución de seguridad plantearía?",
+    "options": [
+      "Protección anti-DDoS con mitigación en la nube complementada con un WAF para blindar las aplicaciones web",
+      "Un antivirus corporativo en los equipos de los usuarios",
+      "Una VPN site-to-site con su proveedor",
+      "Un respaldo diario del portal"
+    ],
+    "answer": 0,
+    "exp": "El anti-DDoS absorbe o filtra el tráfico malicioso antes de saturar el enlace, mientras el WAF inspecciona las peticiones HTTP y bloquea inyecciones y manipulaciones de la aplicación."
+  },
+  {
+    "id": "seg-305",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "¿Cuáles son las diferencias entre las soluciones SIM, SEM y SIEM?",
+    "options": [
+      "SIM recopila y analiza logs con retención para reporte y forense; SEM correlaciona eventos en tiempo real con alertas; SIEM combina ambas funciones en una sola plataforma",
+      "SIM monitoriza red, SEM solo correo y SIEM solo antivirus",
+      "Son tres nombres distintos del mismo producto",
+      "SIM es hardware y SEM y SIEM son software"
+    ],
+    "answer": 0,
+    "exp": "El SIM aporta almacenamiento y análisis histórico de eventos, el SEM la correlación y notificación en tiempo real, y el SIEM integra las dos capacidades para detección, investigación y cumplimiento."
+  },
+  {
+    "id": "seg-306",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "Un cliente con un Next Generation Firewall sigue presentando equipos contaminados con malware en la LAN y un caso de ransomware que cifró archivos. ¿Qué solución le brindaría?",
+    "options": [
+      "Protección endpoint avanzada (EDR/XDR) con detección comportamental y aislamiento de equipos, sumada a segmentación de red y respaldos inmutables",
+      "Más reglas de filtrado en el mismo firewall perimetral",
+      "Retirar el antivirus y confiar en el firewall",
+      "Cifrar las estaciones de trabajo sin respaldos"
+    ],
+    "answer": 0,
+    "exp": "El perímetro no detiene malware que ya entra por otros canales; la defensa requiere visibilidad y respuesta en los endpoints (detección de comportamiento, contención), segmentación para limitar el movimiento lateral e inmutabilidad en los respaldos frente al cifrado."
+  },
+  {
+    "id": "seg-307",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "Un cliente del sector salud ya tiene seguridad perimetral, protección de endpoint y firewall de aplicaciones, pero necesita visibilidad total y un reporte rápido de cómo ocurrió un incidente. ¿Qué solución le plantearía?",
+    "options": [
+      "Un SIEM que centralice y correlacione los eventos de todas las fuentes, con alertas y línea de tiempo del incidente",
+      "Un firewall de próxima generación adicional",
+      "Una plataforma de correo cifrado",
+      "Un sistema de respaldo en cinta"
+    ],
+    "answer": 0,
+    "exp": "El SIEM reúne logs de firewall, endpoint, servidores e identidad, los correlaciona y permite reconstruir en tiempo mínimo qué ocurrió, además de sustentar reportes de cumplimiento y respuesta."
+  },
+  {
+    "id": "seg-308",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "¿Qué ventajas adicionales de esa solución (SIEM) le propondría al cliente para apalancar la venta?",
+    "options": [
+      "Respuesta más rápida a incidentes, detección de amenazas internas, evidencia para auditorías y visibilidad para la dirección",
+      "Eliminación total del riesgo de seguridad",
+      "Reducción de la necesidad de firewalls",
+      "Aumento automático del ancho de banda"
+    ],
+    "answer": 0,
+    "exp": "Más allá de la detección, el SIEM acorta el tiempo de respuesta, identifica accesos anómalos internos, genera evidencia para cumplimiento y entrega métricas útiles para la toma de decisiones."
+  },
+  {
+    "id": "seg-309",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "Un cliente objeta que la protección basada en firmas de otro proveedor es suficiente. ¿Cómo usaría el concepto de amenazas de día cero (zero-day) para defender su solución avanzada?",
+    "options": [
+      "Las firmas solo cubren amenazas ya conocidas; una amenaza de día cero no tiene firma todavía, por lo que se requiere detección basada en comportamiento, análisis heurístico, sandboxing e inteligencia de amenazas",
+      "Las firmas se actualizan solas y por eso cubren los cero día",
+      "Los cero día solo afectan a sistemas sin antivirus",
+      "Con firmas nunca habrá incidentes"
+    ],
+    "answer": 0,
+    "exp": "La firma representa malware ya identificado; hasta que existe, el ataque es desconocido. Por eso la protección moderna analiza el comportamiento y aísla archivos sospechosos en un entorno controlado."
+  },
+  {
+    "id": "seg-310",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "Un cliente sufre ataques a través del correo corporativo. ¿Qué solución le propondría para la protección de ese vector?",
+    "options": [
+      "Gateway de correo con antivirus y anti-phishing, sandboxing de adjuntos, filtrado de enlaces y autenticación de dominio (SPF, DKIM y DMARC)",
+      "Aumentar el tamaño de la bandeja de entrada",
+      "Prohibir el uso de correo y usar solo mensajería",
+      "Un cortafuegos perimetral sin funciones de correo"
+    ],
+    "answer": 0,
+    "exp": "La seguridad de correo combina inspección de contenido y adjuntos, análisis en aislamiento de archivos sospechosos, bloqueo de enlaces maliciosos y verificación del remitente para evitar suplantación."
+  },
+  {
+    "id": "seg-311",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "El cliente quiere que algunos correos con información sensible no puedan ser comprometidos. ¿Qué solución adicional propondría?",
+    "options": [
+      "Cifrado de correo (S/MIME o cifrado en tránsito con TLS) junto con protección de derechos y prevención de pérdida de datos (DLP)",
+      "Cambiar la contraseña del buzón cada día",
+      "Mover esos correos a una carpeta compartida",
+      "Desactivar el cifrado del servidor de correo"
+    ],
+    "answer": 0,
+    "exp": "El cifrado garantiza que solo el destinatario autorizado pueda leer el contenido y DLP controla que la información sensible no salga sin autorización, aun si la cuenta o el equipo se comprometen."
+  },
+  {
+    "id": "seg-312",
+    "module": "seg",
+    "topic": "Prueba técnica",
+    "q": "¿Qué ventajas adicionales mostraría al cliente para apalancar la venta de las soluciones de protección de correo propuestas?",
+    "options": [
+      "Menor riesgo de fraude y ransomware, cumplimiento normativo, protección de datos sensibles con DLP y reducción del tiempo de respuesta ante incidentes",
+      "Cero necesidad de capacitación de usuarios",
+      "Eliminación de los respaldos de correo",
+      "Garantía de que ningún correo llegará a spam"
+    ],
+    "answer": 0,
+    "exp": "La protección de correo reduce la principal vía de entrada de ataques, aporta evidencia de cumplimiento, evita fugas de información sensible y disminuye el impacto y el tiempo de respuesta ante un incidente."
   }
 ];

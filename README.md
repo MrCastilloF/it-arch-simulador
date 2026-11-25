@@ -7,7 +7,7 @@ Aplicación web **autocontenible** para prepararte a entrevistas de **Ingeniero 
 - 📚 **Catálogo de módulos tipo Udemy**: portada, tarjetas de temas, barra de progreso global y por módulo.
 - ❓ **Banco de preguntas de opción múltiple** organizado por módulos (ciberseguridad, datacenter, nube híbrida, UC/CCTV IP, protección de datos, PMI y propuestas).
 - 🔢 **Tú eliges cuántas preguntas** evaluar en cada sesión: **10, 20, 40, 60, 80 o todas**.
-- 🗄️ **Banco de más de 700 preguntas** (≥100 por módulo) repartido en 7 módulos.
+- 🗄️ **Banco de más de 800 preguntas** (≥100 por módulo) repartido en 7 módulos, incluyendo la **Prueba Técnica de Arquitecto de Soluciones** (infraestructura y ciberseguridad) con sus respuestas correctas identificadas.
 - 🔀 **Tú eliges el orden**: aleatorio o **priorizando las que fallaste** en intentos anteriores.
 - 💬 **Retroalimentación inmediata o al final**, con explicación de cada respuesta correcta e incorrecta.
 - 🏆 **Puntaje final** con porcentaje y **desglose por módulo**.
