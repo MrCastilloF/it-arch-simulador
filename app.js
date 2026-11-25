@@ -242,7 +242,7 @@ function openSetup(modules) {
 
   // Conteos disponibles
   const poolSize = QUESTIONS.filter(q => selectedModules.includes(q.module)).length;
-  const counts = [10, 20, 30].filter(c => c < poolSize);
+  const counts = [10, 20, 40, 60, 80].filter(c => c < poolSize);
   if (poolSize > 0) counts.push(poolSize);
   if (!counts.includes(selectedCount)) selectedCount = counts[0];
 
